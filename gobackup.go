@@ -9,7 +9,6 @@ import (
 func main() {
   args := os.Args
   submain(args)
-
 }
 
 func submain(args []string) {
