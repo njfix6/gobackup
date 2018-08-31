@@ -13,3 +13,5 @@ Run: `gobackup <folder1> <folder2>`
 Import using `import "github.com/njfix6/gobackup"` in your file.
 
 ### Examples
+
+Used this bar: https://github.com/cheggaaa/pb
