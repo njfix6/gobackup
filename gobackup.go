@@ -17,13 +17,12 @@ func main() {
 
 
 func submain(args []string)  error {
-  if len(args) != 3 {
-      fmt.Println("Usage: gobackup <job> <folder1> <folder2>")
-      fmt.Println("Usage: gobackup <job>")
-      return errors.New("Wrong number of inputs")
-    }
-  jobName := args[1]
-  if len(args) > 2 {
+  a := len(args)
+  fmt.Println(args)
+  if a == 2 {
+    return nil
+  } else if a == 4{
+    jobName := args[1]
     path := "test_examples/test_jobs.json"
     config := readConfig(path)
     job := Job{Name: jobName, Src: "test", Dst: "test"}
@@ -32,17 +31,18 @@ func submain(args []string)  error {
     if err != nil {
       return err
     }
+    folder1 := args[2]
+    folder2 := args[3]
+    fmt.Println("Syncing: "+ folder1 +" to: " + folder2)
+
+    syncFolders(folder1, folder2)
+    return nil
+  } else {
+    fmt.Println("Usage: gobackup <job> <folder1> <folder2>")
+    fmt.Println("Usage: gobackup <job>")
+    return errors.New("Wrong number of inputs")
   }
 
-
-
-
-  folder1 := args[2]
-  folder2 := args[3]
-  fmt.Println("Syncing: "+ folder1 +" to: " + folder2)
-
-  syncFolders(folder1, folder2)
-  return nil
 }
 
 func syncFolders(folder1 string, folder2 string) {
