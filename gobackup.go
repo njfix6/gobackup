@@ -6,40 +6,56 @@ import (
   "fmt"
   "gopkg.in/cheggaaa/pb.v1"
   "github.com/njfix6/tunnel/pkg/folder"
+  "github.com/njfix6/tunnel/pkg/file"
   "math"
   "errors"
 )
 
 func main() {
+  folder.Create("~/.gobackup")
+  path := "~/.gobackup/config.json"
+  file.Create(path)
   args := os.Args
-  submain(args)
+  submain(args, path)
 }
 
 
-func submain(args []string)  error {
+func submain(args []string, path string)  error {
   a := len(args)
-  fmt.Println(args)
   if a == 2 {
+    jobName := args[1]
+    config := readConfig(path)
+    job, err := getJob(config, jobName)
+    if err != nil {
+      return err
+    }
+
+    src := job.Src
+    dst := job.Dst
+    fmt.Println("SYNCING: "+ src +" -> " + dst)
+    syncFolders(src, dst)
     return nil
+
+    return errors.New("TODO: nothing happening right now")
   } else if a == 4{
     jobName := args[1]
-    path := "test_examples/test_jobs.json"
+    src := args[2]
+    dst := args [3]
     config := readConfig(path)
-    job := Job{Name: jobName, Src: "test", Dst: "test"}
+    job := Job{Name: jobName, Src: src, Dst: dst}
     config = updateJob(job, config)
     err := writeConfig(path, config)
     if err != nil {
       return err
     }
-    folder1 := args[2]
-    folder2 := args[3]
-    fmt.Println("Syncing: "+ folder1 +" to: " + folder2)
-
-    syncFolders(folder1, folder2)
+    fmt.Println("SYNCING: "+ src +" -> " + dst)
+    syncFolders(src, dst)
     return nil
   } else {
-    fmt.Println("Usage: gobackup <job> <folder1> <folder2>")
-    fmt.Println("Usage: gobackup <job>")
+    fmt.Println("USAGE:")
+    fmt.Println("'gobackup <job> <folder1> <folder2>' - to update or create a job")
+    fmt.Println("OR")
+    fmt.Println("'gobackup <job>' - to run a job already created")
     return errors.New("Wrong number of inputs")
   }
 
