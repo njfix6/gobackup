@@ -22,7 +22,6 @@ func TestTooManyArgs(t *testing.T) {
 }
 
 
-
 func TestRun(t *testing.T) {
 
   // Create a job
@@ -48,13 +47,13 @@ func TestRun(t *testing.T) {
   err = submain(args, configJson)
   assert.Equal(t, err, nil)
 
-  // cleanUp()
+  cleanUp()
 }
 
 
 func cleanUp(){
-  folder.Delete("test_examples/test_dst/test.txt")
-  folder.Delete("test_examples/test_dst/test2.txt")
+  file.Delete("test_examples/test_dst/test.txt")
+  file.Delete("test_examples/test_dst/test2.txt")
   folder.Delete("test_examples/test_dst")
   folder.Delete("test_examples/test_jobs.json")
 }
