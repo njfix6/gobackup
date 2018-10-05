@@ -12,5 +12,5 @@ Gobackup is a file backup command line that saves jobs easily for reuse.
 ### Workflow
 ##### First Backup
 Run: `gobackup <job> <folder1> <folder2>` . This will sync folder1 to folder2 and save the source and destination under the job's name. The config is located at `~/.gobackup/config.json`
-##### Repeating backup
+##### Repeating backups
 Run: `gobackup <job>` with the job name made earier to backup those folders over and over again.
